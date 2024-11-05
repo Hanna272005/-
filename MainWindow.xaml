@@ -1,0 +1,225 @@
+﻿<Window x:Class="HairSalonApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Салон стрижек" Height="895" Width="1042" Background="#E6E6FA">
+
+    <Window.Resources>
+        <!-- Стиль для кнопок -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#D8BFD8"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="BorderBrush" Value="#BA55D3"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#8A2BE2" ShadowDepth="3" Opacity="0.5"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="12"/>
+            <!-- Reduced Font Size -->
+        </Style>
+
+        <!-- Стиль для TextBox -->
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#F0E6FF"/>
+            <Setter Property="Foreground" Value="#4B0082"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="BorderBrush" Value="#BA55D3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <!-- Reduced Font Size -->
+            <Setter Property="Width" Value="250"/>
+            <!-- Reduced Width -->
+        </Style>
+
+        <!-- Стиль для DatePicker -->
+        <Style TargetType="DatePicker">
+            <Setter Property="Background" Value="#F0E6FF"/>
+            <Setter Property="Foreground" Value="#4B0082"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="BorderBrush" Value="#BA55D3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <!-- Reduced Font Size -->
+            <Setter Property="Width" Value="250"/>
+            <!-- Reduced Width -->
+        </Style>
+
+        <!-- Стиль для ListView -->
+        <Style TargetType="ListView">
+            <Setter Property="Background" Value="#E6E6FA"/>
+            <Setter Property="BorderBrush" Value="#BA55D3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontSize" Value="12"/>
+            <!-- Reduced Font Size -->
+        </Style>
+
+        <!-- Стиль для Label -->
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="#8A2BE2"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <!-- Reduced Font Size -->
+            <Setter Property="Margin" Value="4"/>
+        </Style>
+
+        <!-- Стиль для ComboBox -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#F0E6FF"/>
+            <Setter Property="Foreground" Value="#4B0082"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="BorderBrush" Value="#BA55D3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <!-- Reduced Font Size -->
+            <Setter Property="Width" Value="250"/>
+            <!-- Reduced Width -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton Name="ToggleButton" Grid.Column="2" Focusable="False" 
+                                  IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                                <ContentPresenter Content="{TemplateBinding SelectionBoxItem}" 
+                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
+                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" 
+                                          VerticalAlignment="Center" HorizontalAlignment="Left" 
+                                          Margin="3,3,23,3"/>
+                            </ToggleButton>
+                            <Popup Name="Popup" Placement="Bottom" AllowsTransparency="True" Focusable="False" 
+                           IsOpen="{TemplateBinding IsDropDownOpen}" 
+                           PopupAnimation="Slide">
+                                <Grid Name="DropDown" SnapsToDevicePixels="True" MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ComboBox}}">
+                                    <Border Name="DropDownBorder" BorderThickness="{TemplateBinding BorderThickness}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True" CanContentScroll="True">
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Раздел для ввода данных о клиенте и отображения записей клиентов -->
+        <StackPanel Grid.Column="0" Orientation="Vertical" Background="#FFF0F5" Margin="5" Cursor="">
+
+            <!-- Ввод данных о клиенте -->
+            <Label Content="Данные клиента" FontSize="14" HorizontalAlignment="Center"/>
+
+            <Label Content="ID клиента:"/>
+            <TextBox x:Name="ClientIDTextBox"/>
+
+            <Label Content="ФИО клиента:"/>
+            <TextBox x:Name="ClientNameTextBox"/>
+
+            <Label Content="Телефон:"/>
+            <TextBox x:Name="ClientPhoneTextBox"/>
+
+            <Label Content="Количество посещений:"/>
+            <TextBox x:Name="ClientVisitsTextBox"/>
+
+            <Label Content="Дата записи:"/>
+            <DatePicker x:Name="ClientDatePicker"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,20,10,0">
+                <Button Content="Добавить" Width="120" Click="AddClientToDatabase_Click"/>
+                <Button Content="Удалить" Width="120" Click="DeleteClientFromDatabase_Click"/>
+                <Button Content="Обновить" Width="120" Click="UpdateClientButton_Click" Cursor="Hand"/>
+            </StackPanel>
+
+            <!-- Отображение записей клиентов -->
+            <Label Content="Записи клиентов" FontSize="14" HorizontalAlignment="Center"/>
+            <ListView x:Name="RecordsListView" Height="380" Width="350" SelectionMode="Single">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding IDklient}" Width="50"/>
+                        <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FIO}" Width="100"/>
+                        <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Telefon}" Width="80"/>
+                        <GridViewColumn Header="Посещения" DisplayMemberBinding="{Binding KOLICHPOSESH}" Width="80"/>
+                        <GridViewColumn Header="Дата записи" DisplayMemberBinding="{Binding DATAZAPIS}" Width="90"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </StackPanel>
+
+        <!-- Раздел для управления стрижками и отображения записей стрижек -->
+        <StackPanel Grid.Column="1" Orientation="Vertical" Background="#FFF0F5" Margin="5">
+            <!-- Ввод данных о стрижке -->
+            <Label Content="Управление стрижками" FontSize="14" HorizontalAlignment="Center"/>
+
+            <Label Content="ID стрижки:"/>
+            <TextBox x:Name="StrizhkaIDTextBox"/>
+
+            <Label Content="Название стрижки:"/>
+            <TextBox x:Name="StrizhkaNameTextBox"/>
+
+            <Label Content="Сложность:"/>
+            <ComboBox x:Name="StrizhkaSlozhnostComboBox">
+                <ComboBoxItem Content="EASY" />
+                <ComboBoxItem Content="HARD" />
+            </ComboBox>
+
+            <Label Content="Тип стрижки:"/>
+            <TextBox x:Name="StrizhkaTypeTextBox"/>
+
+            <Label Content="Пол:"/>
+            <ComboBox x:Name="StrizhkaGenderComboBox">
+                <ComboBoxItem Content="М" />
+                <ComboBoxItem Content="Ж" />
+            </ComboBox>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10,10,0">
+                <Button Content="Добавить" Width="100" Click="AddStrizhka_Click"/>
+                <Button Content="Обновить" Width="100" Click="RefreshStrizhkaRecords"/>
+                <Button Content="Удалить" Width="100" Click="DeleteStrizhka_Click"/>
+            </StackPanel>
+
+            <!-- Отображение записей стрижек -->
+            <Label Content="Записи стрижек" FontSize="14" HorizontalAlignment="Center"/>
+            <ListView x:Name="StrizhkaListView" Height="380" Width="350" SelectionMode="Single">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding IDSTRIZH}" Width="50"/>
+                        <GridViewColumn Header="Название" DisplayMemberBinding="{Binding NAZV}" Width="100"/>
+                        <GridViewColumn Header="Сложность" DisplayMemberBinding="{Binding SLOZHNOST}" Width="80"/>
+                        <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding IDTIPSTRIZH}" Width="50"/>
+                        <GridViewColumn Header="Пол" DisplayMemberBinding="{Binding POL}" Width="70"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>
